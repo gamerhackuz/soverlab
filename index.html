@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Overlap Finder</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}body{background:#f8fafc;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}.card{background:white;padding:20px;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.1);width:320px}h2{text-align:center;margin-bottom:15px;color:#0f172a}.grp{margin-bottom:10px}label{font-size:13px;color:#475569}input{width:100%;padding:8px;border:1px solid #e2e8f0;border-radius:6px;margin-top:4px}.bar{height:20px;background:#e2e8f0;border-radius:10px;margin-top:15px;position:relative;overflow:hidden}.overlap{position:absolute;left:0;height:100%;background:#10b981;transition:0.3s}.info{text-align:center;margin-top:10px;font-size:14px;color:#64748b}</style></head><body>
+<div class="card"><h2>📅 Overlap Finder</h2>
+<div class="grp"><label>Birinchi vaqt</label><div style="display:flex;gap:8px"><input type="time" id="s1" value="09:00"><input type="time" id="e1" value="12:00"></div></div>
+<div class="grp"><label>Ikkinchi vaqt</label><div style="display:flex;gap:8px"><input type="time" id="s2" value="11:00"><input type="time" id="e2" value="14:00"></div></div>
+<div class="bar"><div class="overlap" id="ov"></div></div><div class="info" id="info">Vaqtni kiriting...</div></div>
+<script>
+function parse(t){const[h,m]=t.split(':').map(Number);return h*60+m}
+['s1','e1','s2','e2'].forEach(id=>document.getElementById(id).addEventListener('input',calc))
+function calc(){const s1=parse(document.getElementById('s1').value),e1=parse(document.getElementById('e1').value),s2=parse(document.getElementById('s2').value),e2=parse(document.getElementById('e2').value);
+const start=Math.max(s1,s2),end=Math.min(e1,e2);const overlap=Math.max(0,end-start);
+document.getElementById('ov').style.left=(start/1440*100)+'%';document.getElementById('ov').style.width=(overlap/1440*100)+'%';
+const h=Math.floor(overlap/60),m=overlap%60;document.getElementById('info').textContent=overlap?`✅ Umumiy vaqt: ${h} soat ${m} daqiqa`:'❌ Umumiy vaqt yo\'q'}
+calc()
+</script></body></html>
